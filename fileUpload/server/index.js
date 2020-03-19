@@ -17,17 +17,18 @@ const resolvePost = req =>
         });
     });
 
-const mergeFileChunk = async (filePath, filename) => {
-    const chunkDir = `${UPLOAD_DIR}/${filename}`;
+const mergeFileChunk = async (filePath, fileHash) => {
+    const chunkDir = `${UPLOAD_DIR}/${fileHash}`;
     const chunkPaths = await fse.readdir(chunkDir);
-    debugger
-    await fse.writeFile(filePath, "");
+    await fse.writeFile(filePath + '1', "");
     chunkPaths.forEach(chunkPath => {
-        debugger
         fse.appendFileSync(filePath, fse.readFileSync(`${chunkDir}/${chunkPath}`));
-        fse.unlinkSync(`${chunkDir}/${chunkPath}`)
-    })
-    fse.rmdirSync(chunkDir)
+        fse.unlinkSync(`${chunkDir}/${chunkPath}`);
+    });
+    fse.rmdirSync(chunkDir); // 合并后删除保存切片的目录
+}
+const extractExt = filename => {
+    filename.slice(filename.lastIndexOf('.'), filename.length);
 }
 
 server.on('request', async (req, res) => {
@@ -38,11 +39,30 @@ server.on('request', async (req, res) => {
         res.end()
         return
     }
-    if(req.url === '/merge') {
+    if(req.url === '/verify'){
+        const data = await resolvePost(req);
+        const {fileHash, filename} = data;
+        const ext = extractExt(filename);
+        const filePath = `${UPLOAD_DIR}/${fileHash}${ext}`
+        if(fse.existsSync(filePath)) {
+            res.end(
+                JSON.stringify({
+                    shouldUpload: false
+                })
+            )
+        } else {
+            res.end(
+                JSON.stringify({
+                    shouldUpload: true
+                })
+            )
+        }
+    }
+    if (req.url === '/merge') {
         const data = await resolvePost(req)
-        const {filename} = data
+        const { filename } = data
         const filePath = `${UPLOAD_DIR}/${filename}`
-        await mergeFileChunk(filePath,filename);
+        await mergeFileChunk(filePath, filename);
         res.end(
             JSON.stringify({
                 code: 0,

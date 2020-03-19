@@ -106,14 +106,59 @@ export default {
       Object.assign(this.$data, this.$options.data());
       this.container.file = file;
     },
+    calculateHash(fileChunkList) {
+      return new Promise(resolve => {
+        this.container.worker = new Worker("../public/hash.js");
+        this.container.worker.postMessage({ fileChunkList });
+        this.container.worker.onmessage = e => {
+          const { percentage, hash } = e.data;
+          this.hashPercentage = percentage;
+          if (hash) {
+            resolve(hash);
+          }
+        };
+      });
+    },
+    async verifyUpload(filename, fileHash) {
+      const { data } = await this.request({
+        url: "http://localhost:3000/verify",
+        headers: {
+          "content-type": "application/json"
+        },
+        data: JSON.stringify({
+          filename,
+          fileHash
+        })
+      });
+      return JSON.parse(data);
+    },
     async handleUpload() {
-        if(!this.container.file) return
-        const fileChunkList = this.createFileChunk(this.container.file)
-        this.data = fileChunkList.map(({file}, index) => ({
-            chunk: file,
-            hash: this.container.file.name + '-' + index
-        }))
-        await this.uploadChunks()
+      if (!this.container.file) return;
+      const fileChunkList = this.createFileChunk(this.container.file);
+      this.container.hash = await this.calculateHash(fileChunkList);
+
+      const { shouldUpload, uploadedList } = await this.verifyUpload(
+        this.container.file.name,
+        this.container.hash
+      );
+      if (!shouldUpload) {
+        this.$message.success("秒传，上传成功");
+        return;
+      }
+
+      this.data = fileChunkList.map(({ file }, index) => ({
+        fileHash: this.container.hash,
+        chunk: file,
+        index,
+        hash: this.container.file.name + "-" + index,
+        percentage: 0
+      }));
+      await this.uploadChunks(uploadedList);
+    },
+    createProgressHandler(item) {
+      return e => {
+        item.percentage = parseInt(String((e.loaded / e.total) * 100));
+      };
     },
     request({
       url,
@@ -156,35 +201,38 @@ export default {
     async uploadChunks(uploadedList = []) {
       // todo
       const requestList = this.data
+        .filter(({ hash }) => !uploadedList.includes(hash))
         .map(({ chunk, hash, index }) => {
           const formData = new FormData();
           formData.append("chunk", chunk);
           formData.append("hash", hash);
           formData.append("filename", this.container.file.name);
-          return { formData };
+          return { formData, index };
         })
-        .map(async ({ formData }) =>
+        .map(async ({ formData, index }) =>
           this.request({
             url: "http://localhost:3000",
-            data: formData
+            data: formData,
+            onProgress: this.createProgressHandler(this.data[index])
           })
         );
       await Promise.all(requestList);
 
-      await this.mergeRequest()
+      if (uploadedList.length + requestList.length === this.data.length) {
+        await this.mergeRequest();
+      }
     },
     async mergeRequest() {
-        await this.request({
-            url: 'http://localhost:3000/merge',
-            headers: {
-                'content-type': 'application/json'
-            },
-            data: JSON.stringify({
-                filename: this.container.file.name
-            })
+      await this.request({
+        url: "http://localhost:3000/merge",
+        headers: {
+          "content-type": "application/json"
+        },
+        data: JSON.stringify({
+          filename: this.container.file.name
         })
-    },
-    
+      });
+    }
   }
 };
 </script>

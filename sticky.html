@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset='utf-8' />
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <title>sticky-吸顶列表</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .group {
+      width: 100%;
+      min-height: 50px;
+      border-bottom: 1px solid #e1e1e1;
+      position: relative;
+    }
+
+    .title {
+      position: -webkit-sticky;
+      position: sticky;
+      text-indent: 20px;
+      height: 45px;
+      line-height: 45px;
+      background: #ff7300;
+      top: 10px;
+    }
+
+    .content {
+      display: block;
+    }
+
+    .content div {
+      margin: 0 15px;
+      text-indent: 10px;
+      line-height: 30px;
+      border-bottom: 1px solid #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="group">
+    <div class="content">
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+    </div>
+  </div>
+  <div class="group">
+    <div class="title">group1</div>
+    <div class="content">
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+    </div>
+  </div>
+  <div class="group">
+    <div class="title">group2</div>
+    <div class="content">
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+    </div>
+  </div>
+  <div class="group">
+    <div class="title">group3</div>
+    <div class="content">
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+    </div>
+  </div>
+  <div class="group">
+    <div class="title">group4</div>
+    <div class="content">
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+    </div>
+  </div>
+  <div class="group">
+    <div class="title">group5</div>
+    <div class="content">
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+    </div>
+  </div>
+  <div class="group">
+    <div class="title">group6</div>
+    <div class="content">
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+    </div>
+  </div>
+  <div class="group">
+    <div class="title">group7</div>
+    <div class="content">
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+    </div>
+  </div>
+  <div class="group">
+    <div class="title">group8</div>
+    <div class="content">
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+    </div>
+  </div>
+  <div class="group">
+    <div class="title">group9</div>
+    <div class="content">
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+    </div>
+  </div>
+  <div class="group">
+    <div class="title">group10</div>
+    <div class="content">
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function () {
+      var titles = document.getElementsByClassName('title');
+      for (var i = 0; i < titles.length; i++) {
+        titles[i].onclick = function (evt) {
+          this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' :
+            'block';
+        };
+      }
+    }
+  </script>
+</body>
+
+</html>
