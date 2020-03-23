@@ -1,10 +1,12 @@
-function throttle(fn, wait) {
+function throttle(fn, wait, options) {
     var previous = 0, timeout, result
+    if(!options) options = {}
 
     var later = function() {
-        previous = +new Date()
+        previous = options.leading === false ? 0 : +new Date()
         timeout = null
         fn.apply(this, args)
+        if(!timeout) context = arguments = null
     }
 
     var throttled = function() {

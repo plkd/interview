@@ -1,6 +1,6 @@
 function debounce(fn, wait, immediate) {
     let timeout = null, result
-    return function() {
+    var debounced =  function() {
         clearTimeout(timeout)
         if(immediate) {
             var callNow = !timeout
@@ -15,5 +15,10 @@ function debounce(fn, wait, immediate) {
         }
         return result
     }
+    debounced.cancel = function() {
+        clearTimeout(timeout)
+        timeout = null
+    }
+    return debounced
 }
 
