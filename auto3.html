@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrap{
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .wrap div{
+            flex: 1;
+            height: 100px;
+            background: pink;
+        }
+        .wrap div + div {
+            margin-left: 10px;
+        }
+
+        .wrap1{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            /* grid: repeat(2, 60px) / auto-flow 80px; */
+            /* grid-column-gap: 10px; */
+            /* grid-row-gap: 10px; */
+            row-gap: 10px;
+            column-gap: 10px;
+        }
+        .wrap1 div{
+            background: pink;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div class="wrap1">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</body>
+</html>
