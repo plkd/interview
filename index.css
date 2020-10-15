@@ -1,0 +1,14 @@
+.container .left .open-container .open-item .result.dlt .ball.red {
+    background: #2e7fd3;
+    color: #fffffa;
+}
+
+.container .left .open-container .open-item .result.dlt .ball.blue {
+    background: #efbb07;
+    color: #37202d;
+}
+
+.container .left .open-container .open-item .result.pl .ball.red {
+    background: #d986cc;
+    color: #fffffa;
+}

@@ -3,7 +3,7 @@ const PENDING = "PENDING";
 const FULFILLED = "FULFILLED";
 const REJECTED = "REJECTED";
 
-class Promise {
+class MyPromise {
   constructor(handle) {
     if (!isFunction(handle)) {
       throw new Error("MyPromise must accept a function as a parameter");
@@ -36,14 +36,14 @@ class Promise {
   then(onFulfilled, onRejected) {
     const { _value, _status } = this;
 
-    return new Promise((onFulfilledNext, onRejectedNext) => {
+    return new MyPromise((onFulfilledNext, onRejectedNext) => {
       let fulFilled = value => {
         try {
           if (!isFunction(onFulfilled)) {
             onFulfilledNext(value);
           } else {
             let res = onFulfilled(value);
-            if (res instanceof Promise) {
+            if (res instanceof MyPromise) {
               res.then(onFulfilledNext, onRejectedNext);
             } else {
               onFulfilledNext(value);
@@ -59,7 +59,7 @@ class Promise {
             onRejectedNext(error);
           } else {
             let res = onRejected(error);
-            if (res instanceof Promise) {
+            if (res instanceof MyPromise) {
               res.then(onFulfilledNext, onRejectedNext);
             } else {
               onFulfilled(res);
