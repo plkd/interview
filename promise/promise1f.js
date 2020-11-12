@@ -1,3 +1,5 @@
+//  failed
+
 const isFunction = variable => typeof variable === "function";
 const PENDING = "PENDING";
 const FULFILLED = "FULFILLED";
@@ -83,4 +85,16 @@ class MyPromise {
       }
     });
   }
+
+  static deferred = function () {
+    var result = {};
+    result.promise = new MyPromise(function (resolve, reject) {
+      result.resolve = resolve;
+      result.reject = reject;
+    });
+  
+    return result;
+  };
 }
+
+module.exports = MyPromise;

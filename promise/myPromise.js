@@ -123,9 +123,15 @@ function MyPromise(fn) {
   };
   doResolve(fn, resolve, reject);
 }
-new MyPromise(function(resolve, reject) {
-    fetch('https://api.nasa.gov/planetary/apod?api_key=CNWHeq8dhvkaBNvrfW44QcYJNNkFtredGOzQ6OOI').then(res => {
-        console.log(res)
-        resolve(res)
-    })
-})
+
+MyPromise.deferred = function () {
+  var result = {};
+  result.promise = new MyPromise(function (resolve, reject) {
+    result.resolve = resolve;
+    result.reject = reject;
+  });
+
+  return result;
+};
+
+module.exports = MyPromise;

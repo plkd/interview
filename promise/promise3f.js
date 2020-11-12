@@ -1,4 +1,6 @@
-function Promise(resolve) {
+// failed
+
+function Promise(resolver) {
   this._status = "pending";
 
   this._doneCallbacks = [];
@@ -147,3 +149,15 @@ function run(promise) {
   promise._doneCallbacks = [];
   promise._failCallbacks = [];
 }
+
+Promise.deferred = function () {
+    var result = {};
+    result.promise = new Promise(function (resolve, reject) {
+      result.resolve = resolve;
+      result.reject = reject;
+    });
+  
+    return result;
+  };
+  
+  module.exports = Promise;

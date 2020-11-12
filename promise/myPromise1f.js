@@ -1,3 +1,4 @@
+//  failed
 class MyPromise {
   constructor(executor) {
     this.status = "pending";
@@ -48,8 +49,8 @@ class MyPromise {
       };
     }
 
-    return new Promise((resolve, reject) => {
-      this.rejectArr.push((result) => {
+    return new MyPromise((resolve, reject) => {
+      this.resolveArr.push((result) => {
         try {
           let x = resolveFn(result);
 
@@ -129,4 +130,16 @@ class MyPromise {
       }
     });
   }
+
+  static deferred = function () {
+    var result = {};
+    result.promise = new MyPromise(function (resolve, reject) {
+      result.resolve = resolve;
+      result.reject = reject;
+    });
+  
+    return result;
+  };
 }
+
+module.exports = MyPromise;
