@@ -6,6 +6,9 @@
   <title>Document</title>
 </head>
 <body>
+
+    <a href="https://google.com" target="_parent">google</a>
+
     <div class="box">
         <div class="left">1</div>
         <div class="content">2</div>
@@ -46,5 +49,11 @@
     }
 </style>
 
+<script>
+    
+    window.addEventListener("storage", function(e) {
+        alert(e.newValue)
+    })
+</script>
 </body>
 </html>
