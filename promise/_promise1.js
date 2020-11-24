@@ -96,7 +96,7 @@ MyPromise.prototype.then = function (onFulfilled, onRejected) {
 
 function resolvePromise(promise2, x, resolve, reject) {
   if (promise2 === x) {
-    reject(new TypeError("Chaining cycle"));
+    reject(new TypeError("Chaining cycle detedted for promise"));
   }
 
   if (x && (typeof x === "object" || typeof x === "function")) {
