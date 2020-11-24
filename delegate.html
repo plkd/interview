@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li class="li3">3</li>
+    <li>4</li>
+</ul>
+
+<script>
+  function delegate(parent, selector, type,  handler) {
+    let parent1 = document.querySelector(parent)
+    if(parent1.addEventListener) {
+      parent1.addEventListener(type, eventFn, false)
+    } else {
+      parent1.attachEvent('on' + type, eventFn)
+    }
+
+    function eventFn(e) {
+      var e = e || window.event
+      var target = e.target || e.srcElement
+      if(Array.prototype.includes.call(target.classList, (selector.slice(1)))){
+        handler.call(target,e.target)
+      }
+    }
+  }
+
+  function handler(e) {
+    console.log(e.innerText)
+  }
+
+  delegate('ul', '.li3', 'click', handler)
+</script>
+</body>
+</html>
