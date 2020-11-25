@@ -209,4 +209,8 @@ MyPromise.deferred = function () {
   return result;
 };
 
+MyPromise.cancel = function () {
+  return new MyPromise(function () {});
+};
+
 module.exports = MyPromise;

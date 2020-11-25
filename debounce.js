@@ -67,11 +67,9 @@ function debounce2(fn, delay) {
   };
 }
 
-function debounce22(fn, delay){
-    var timer
-    return function() {
-        
-    }
+function debounce22(fn, delay) {
+  var timer;
+  return function () {};
 }
 
 function debounce3(fn, wait, immediate) {
@@ -101,6 +99,20 @@ function debounce3(fn, wait, immediate) {
       result = fn.apply(context, args);
       context = args = null;
     }
-    return result
+    return result;
+  };
+}
+
+function simpleDebounce(fn, wait) {
+  var timerId;
+  return function () {
+    var context = this;
+    var args = arguments;
+    if (timerId) {
+      clearTimeout(timerId);
+      setTimeout(function () {
+        fn.apply(context, args);
+      }, wait);
+    }
   };
 }

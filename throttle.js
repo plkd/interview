@@ -50,42 +50,21 @@ function throttle1(fn, wait, options) {
   return throttled;
 }
 
-function throttle3(fn, wait) {
-  let lastTime,
-    timerId = null;
-  return function () {
-    let currentTime = +new Date();
-    if (currentTime >= lastTime + wait) {
-      fn();
-      lastTime = currentTime;
-    } else {
-      if (timerId) {
-        clearTimeout(timerId);
-        // timerId = null
-      }
-      timerId = setTimeout(function () {
-        fn();
-      }, wait);
-    }
-  };
-}
-
-function _throttle(fn, wait, option) {
-  var context, args, result;
-  var timeout = null;
+function _throttle(fn, wait, options) {
+  var timeout, context, args, result;
   var previous = 0;
   options = options || {};
+
   var later = function () {
-    previous = option.leading === false ? 0 : +new Date();
+    previous = options.leading ? +new Date() : 0;
     timeout = null;
     result = fn.apply(context, args);
-    if (!timeout) {
-      context = args = null;
-    }
+    if (!timeout) context = args = null;
   };
 
   return function () {
     var now = +new Date();
+
     if (!previous && options.leading === false) previous = now;
 
     var remaining = wait - (now - previous);
@@ -99,11 +78,11 @@ function _throttle(fn, wait, option) {
       }
       previous = now;
       result = fn.apply(context, args);
-      if (!timeout) {
-        context = args = null;
-      } else if (!timeout && options.trailing !== false) {
-        timeout = setTimeout(later, remaining);
-      }
+      if (!timeout) context = args = null;
+    } else if (!timeout && options.trailing !== false) {
+      timeout = setTimeout(later, remaining);
     }
+
+    return result
   };
 }
