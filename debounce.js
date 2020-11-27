@@ -55,23 +55,6 @@ function debounce1(fn, wait, immediate) {
   };
 }
 
-function debounce2(fn, delay) {
-  var timer;
-  return function () {
-    var context = this;
-    var args = arguments;
-    clearTimeout(timer);
-    timer = setTimeout(function () {
-      fn.apply(context, arguments);
-    }, delay);
-  };
-}
-
-function debounce22(fn, delay) {
-  var timer;
-  return function () {};
-}
-
 function debounce3(fn, wait, immediate) {
   var result, context, args, timeout, timestamp;
 
@@ -114,5 +97,35 @@ function simpleDebounce(fn, wait) {
         fn.apply(context, args);
       }, wait);
     }
+  };
+}
+
+function myDebounce(fn, wait, immediate) {
+  var context, args, timeout, timestamp, result;
+
+  var later = function () {
+    var last = +new Date() - timestamp;
+    if (last >= wait || last < 0) {
+      timeout = null;
+      if (!immediate) {
+        fn.apply(context, args);
+        if (!timeout) context = args = null;
+      }
+    }
+  };
+
+  return function () {
+    timestamp = +new Date();
+    context = this;
+    args = arguments;
+    var callNow = !timeout && immediate;
+    if (!timeout) {
+      timeout = setTimeout(later, wait);
+    }
+    if (callNow) {
+      result = fn.apply(context, args);
+      context = args = null;
+    }
+    return result;
   };
 }

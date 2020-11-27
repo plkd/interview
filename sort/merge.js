@@ -22,8 +22,18 @@ function sort(arr, lo, hi) {
   merge(arr, lo, mid, hi);
 }
 
-var arr = [8, 6, 4, 808, -22,2, 1, 9, 3];
+var arr = [8, 6, 4, 808, -22, 2, 1, 9, 3];
 
-mergeSort(arr);
+// mergeSort(arr);
+mergeBu(arr)
 
-console.log(arr)
+console.log(arr);
+
+function mergeBu(arr) {
+  let n = arr.length;
+  for (let sz = 1; sz < n; sz = sz + sz) {
+    for (let lo = 0; lo <= n - sz; lo += sz + sz) {
+      merge(arr, lo, lo + sz - 1, Math.min(lo + sz + sz - 1, n - 1));
+    }
+  }
+}

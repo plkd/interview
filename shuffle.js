@@ -42,3 +42,11 @@ function shuffle4(arr) {
   }
   return arr;
 }
+
+function shuffle5(arr) {
+  let len = arr.length
+  for(let i=0;i<len;i++) {
+    let r = parseInt(Math.random() * (i + 1))
+    exch(arr, i, r)
+  }
+}
